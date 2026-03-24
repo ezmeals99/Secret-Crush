@@ -3,7 +3,7 @@
 <head>
 <title>Gen Z Crush</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
 
@@ -14,31 +14,48 @@ body {
     color: white;
 }
 
+/* ADMIN BUTTON */
+.top {
+    position: fixed;
+    right: 15px;
+    top: 15px;
+}
+
+.adminBtn {
+    background: linear-gradient(135deg,#00e5ff,#00bcd4);
+    border: none;
+    padding: 12px 16px;
+    border-radius: 50px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
 /* HERO */
 .hero {
     margin: 20px;
-    padding: 40px;
+    padding: 50px 20px;
     border-radius: 30px;
     background: linear-gradient(135deg,#6a11cb,#2575fc);
     text-align: center;
-    font-size: 40px;
-    font-weight: 600;
+    font-size: 36px;
+    font-weight: 700;
 }
 
 /* CARDS */
 .container {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
 .card {
     background: #1c1c2e;
     margin: 15px;
-    padding: 20px;
-    border-radius: 20px;
-    width: 250px;
-    cursor: pointer;
+    padding: 25px;
+    border-radius: 25px;
+    width: 85%;
+    max-width: 350px;
+    text-align: center;
     transition: 0.3s;
 }
 
@@ -46,21 +63,31 @@ body {
     transform: scale(1.05);
 }
 
+.card h3 {
+    font-size: 22px;
+}
+
+.card p {
+    font-size: 16px;
+}
+
 .editBtn {
     display: none;
     background: orange;
-    border: none;
     margin-top: 10px;
+    padding: 6px 10px;
 }
 
-/* INPUT BOX */
+/* INPUT */
 .inputBox {
     background: #1c1c2e;
-    border-radius: 20px;
+    border-radius: 25px;
     padding: 15px;
     margin: 10px;
     border: none;
     color: white;
+    width: 80%;
+    font-size: 16px;
 }
 
 /* BUTTON */
@@ -68,27 +95,22 @@ body {
     background: #00e5ff;
     color: black;
     border: none;
-    padding: 10px 20px;
-    border-radius: 20px;
+    padding: 14px 28px;
+    border-radius: 30px;
+    font-size: 18px;
     cursor: pointer;
-    transition: 0.2s;
+    margin-top: 10px;
 }
 
 .btn:active {
     transform: scale(0.9);
 }
 
-/* HIDE SECTIONS */
+/* SECTIONS */
 .section {
     display: none;
     text-align: center;
     margin-top: 30px;
-}
-
-.top {
-    position: absolute;
-    right: 20px;
-    top: 20px;
 }
 
 </style>
@@ -97,25 +119,25 @@ body {
 <body>
 
 <div class="top">
-<button class="btn" onclick="adminLogin()">Admin</button>
+<button class="adminBtn" onclick="adminLogin()">⚙️</button>
 </div>
 
-<!-- HERO -->
 <div class="hero" id="heroText">✨ Gen Z ✨</div>
 
-<!-- HOME CARDS -->
+<!-- HOME -->
 <div id="home" class="container">
 
 <div class="card" onclick="openCategory('secret')">
 <h3 id="card1">Secret Crush 💖</h3>
 <p id="card1desc">Send a hidden love message</p>
+
 <button class="editBtn" onclick="edit('card1')">Edit</button>
 <button class="editBtn" onclick="edit('card1desc')">Edit Desc</button>
 </div>
 
 </div>
 
-<!-- CATEGORY PAGE -->
+<!-- CATEGORY -->
 <div id="secret" class="section">
 <h2 id="secretTitle">Secret Crush 💖</h2>
 <p id="secretDesc">Create your hidden love link</p>
@@ -127,7 +149,7 @@ body {
 <button class="btn" onclick="openCreate()">Create New</button>
 </div>
 
-<!-- CREATE PAGE -->
+<!-- CREATE -->
 <div id="create" class="section">
 
 <input class="inputBox" id="your" placeholder="Your Name"><br>
@@ -145,7 +167,7 @@ body {
 let isAdmin = false;
 let generatedLink = "";
 
-// ADMIN LOGIN
+// ADMIN
 function adminLogin(){
     let pass = prompt("Password:");
     if(pass === "1234"){
@@ -155,26 +177,26 @@ function adminLogin(){
     }
 }
 
-// EDIT FUNCTION
+// EDIT
 function edit(id){
     let el = document.getElementById(id);
-    let newText = prompt("Edit:", el.innerText);
-    if(newText){
-        el.innerText = newText;
-        localStorage.setItem(id, newText);
+    let val = prompt("Edit:", el.innerText);
+    if(val){
+        el.innerText = val;
+        localStorage.setItem(id, val);
     }
 }
 
-// LOAD TEXT
+// LOAD
 function load(){
     let ids = ["heroText","card1","card1desc","secretTitle","secretDesc"];
     ids.forEach(id=>{
-        let saved = localStorage.getItem(id);
-        if(saved) document.getElementById(id).innerText = saved;
+        let val = localStorage.getItem(id);
+        if(val) document.getElementById(id).innerText = val;
     });
 }
 
-// NAVIGATION
+// NAV
 function openCategory(id){
     document.getElementById("home").style.display="none";
     document.getElementById(id).style.display="block";
@@ -185,7 +207,7 @@ function openCreate(){
     document.getElementById("create").style.display="block";
 }
 
-// GENERATE LINK
+// GENERATE
 function generate(){
     let your = document.getElementById("your").value;
     let crush = document.getElementById("crush").value;
@@ -196,10 +218,10 @@ function generate(){
     document.getElementById("copyBtn").style.display="inline";
 }
 
-// COPY BUTTON
-document.getElementById("copyBtn").onclick = function(){
+// COPY
+document.getElementById("copyBtn").onclick = () => {
     navigator.clipboard.writeText(generatedLink);
-    alert("Link Copied!");
+    alert("Copied!");
 }
 
 load();
