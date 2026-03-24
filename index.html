@@ -1,92 +1,164 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Crush Generator</title>
+<title>Crush UI</title>
 
 <style>
 body {
     margin: 0;
     font-family: Arial;
-    background: linear-gradient(to bottom, #00c6ff, #0072ff);
+    background: linear-gradient(to right,#6a11cb,#2575fc);
     color: white;
-    text-align: center;
 }
 
-.top-bar {
+.top {
     position: absolute;
     right: 20px;
     top: 20px;
 }
 
-button {
-    padding: 10px 20px;
-    border: none;
-    background: #ff4081;
-    color: white;
-    cursor: pointer;
-    border-radius: 5px;
+.tabs {
+    display: flex;
+    justify-content: center;
+    background: rgba(0,0,0,0.3);
 }
 
-.container {
-    margin-top: 150px;
+.tab {
+    padding: 15px 25px;
+    cursor: pointer;
+}
+
+.active {
+    background: black;
+}
+
+.section {
+    display: none;
+    text-align: center;
+    margin-top: 100px;
 }
 
 input {
     padding: 10px;
-    width: 250px;
     margin: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.editBtn {
+    display: none;
+    background: orange;
+    margin-left: 10px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="top-bar">
-    <button onclick="adminLogin()">Admin</button>
+<div class="top">
+<button onclick="login()">Admin</button>
 </div>
 
-<div class="container">
-    <h1 id="mainText">Create Your Crush Link 💖</h1>
+<!-- Tabs -->
+<div class="tabs">
+<div class="tab active" onclick="openTab('home')">Home</div>
+<div class="tab" onclick="openTab('create')">Create</div>
+<div class="tab" onclick="openTab('preview')">Preview</div>
+</div>
 
-    <input id="yourName" placeholder="Your Name"><br>
-    <input id="crushName" placeholder="Crush Name"><br>
+<!-- HOME -->
+<div id="home" class="section" style="display:block;">
+<h1 id="homeText">Welcome 💖</h1>
+<button class="editBtn" onclick="edit('homeText')">Edit</button>
+</div>
 
-    <button onclick="generate()">Generate</button>
+<!-- CREATE -->
+<div id="create" class="section">
+<h2 id="createText">Create your link</h2>
+<button class="editBtn" onclick="edit('createText')">Edit</button>
 
-    <p id="linkBox"></p>
+<br>
+<input id="your" placeholder="Your Name"><br>
+<input id="crush" placeholder="Crush Name"><br>
+
+<button onclick="generate()">Generate</button>
+
+<p id="linkBox"></p>
+</div>
+
+<!-- PREVIEW -->
+<div id="preview" class="section">
+<h2 id="previewText">Preview</h2>
+<button class="editBtn" onclick="edit('previewText')">Edit</button>
+
+<p id="previewBox"></p>
 </div>
 
 <script>
 
-// Admin editable text
-let siteText = {
-    main: "Create Your Crush Link 💖",
-    question: "Do you love me back? 😍"
-};
+let isAdmin = false;
 
-function adminLogin() {
-    let pass = prompt("Enter admin password:");
+// TAB SWITCH
+function openTab(id){
+    document.querySelectorAll(".section").forEach(s=>s.style.display="none");
+    document.getElementById(id).style.display="block";
+
+    document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+    event.target.classList.add("active");
+}
+
+// ADMIN LOGIN
+function login(){
+    let pass = prompt("Enter password:");
     if(pass === "1234"){
-        let newText = prompt("Change main text:", siteText.main);
-        if(newText) {
-            siteText.main = newText;
-            document.getElementById("mainText").innerText = newText;
-        }
+        isAdmin = true;
+        document.querySelectorAll(".editBtn").forEach(b=>b.style.display="inline");
+        alert("Admin mode ON");
     } else {
-        alert("Wrong password!");
+        alert("Wrong password");
     }
 }
 
-function generate() {
-    let your = document.getElementById("yourName").value;
-    let crush = document.getElementById("crushName").value;
+// EDIT TEXT
+function edit(id){
+    let el = document.getElementById(id);
+    let newText = prompt("Edit text:", el.innerText);
+    if(newText){
+        el.innerText = newText;
+        localStorage.setItem(id, newText);
+    }
+}
 
-    let link = `post.html?your=${your}&crush=${crush}`;
+// LOAD SAVED TEXT
+function load(){
+    ["homeText","createText","previewText"].forEach(id=>{
+        let saved = localStorage.getItem(id);
+        if(saved){
+            document.getElementById(id).innerText = saved;
+        }
+    });
+}
+
+// GENERATE LINK
+function generate(){
+    let your = document.getElementById("your").value;
+    let crush = document.getElementById("crush").value;
+
+    let link = window.location.origin + window.location.pathname +
+    "post.html?your="+your+"&crush="+crush;
 
     document.getElementById("linkBox").innerHTML =
-        "Share this link:<br><a href='"+link+"'>"+link+"</a>";
+    `<a href="${link}" target="_blank">${link}</a>`;
+
+    document.getElementById("previewBox").innerText =
+    `${crush}, ${your} likes you ❤️`;
 }
+
+load();
 
 </script>
 
