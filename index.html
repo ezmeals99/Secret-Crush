@@ -6,91 +6,78 @@
     <title>Gen Z Crush</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { margin: 0; font-family: 'Poppins', sans-serif; background: #0f0f1a; color: white; padding-bottom: 80px; }
+        body { margin: 0; font-family: 'Poppins', sans-serif; background: #0f0f1a; color: white; padding-bottom: 60px; }
         
-        /* ADMIN BUTTON - Enlarged for Mobile */
-        .top { position: fixed; right: 20px; top: 20px; z-index: 100; }
+        .top { position: fixed; right: 15px; top: 15px; z-index: 100; }
         .adminBtn { 
-            background: rgba(255,255,255,0.15); 
-            border: 2px solid white; 
+            background: rgba(255,255,255,0.1); 
+            border: 1.5px solid white; 
             color: white; 
-            padding: 18px; /* Increased */
+            padding: 15px; 
             border-radius: 50%; 
             cursor: pointer; 
-            font-size: 24px; /* Increased */
+            font-size: 21px; 
         }
         
-        /* HERO - Scaled Text */
         .hero { 
-            margin: 25px; 
-            padding: 70px 25px; 
-            border-radius: 40px; 
+            margin: 20px; 
+            padding: 60px 20px; 
+            border-radius: 35px; 
             background: linear-gradient(135deg,#6a11cb,#2575fc); 
             text-align: center; 
-            font-size: 56px; /* 32px * 1.75 */
+            font-size: 48px; /* 32px * 1.5 */
             font-weight: 700; 
         }
         
         .container { display: flex; flex-direction: column; align-items: center; }
         
-        /* CARDS - Larger touch targets */
         .card { 
-            margin: 25px; 
-            padding: 40px; 
-            border-radius: 35px; 
+            margin: 20px; 
+            padding: 35px; 
+            border-radius: 30px; 
             width: 85%; 
-            max-width: 450px; 
+            max-width: 400px; 
             text-align: center; 
             transition: 0.3s; 
             cursor: pointer; 
             position: relative;
         }
-        .card h3 { font-size: 38px; margin-bottom: 15px; } /* Scaled */
-        .card p { font-size: 28px; opacity: 0.9; } /* Scaled */
+        .card h3 { font-size: 33px; margin-bottom: 12px; }
+        .card p { font-size: 24px; opacity: 0.9; }
         
-        /* ADMIN CONTROLS */
-        .admin-controls { display: none; margin-top: 30px; text-align: center; width: 100%; }
-        .editBtn, .delBtn { 
-            padding: 12px 20px; 
-            border-radius: 10px; 
-            border: none; 
-            cursor: pointer; 
-            margin: 8px; 
-            font-size: 20px; 
-        }
+        .admin-controls { display: none; margin-top: 25px; text-align: center; width: 100%; }
+        .editBtn, .delBtn { padding: 10px 18px; border-radius: 8px; border: none; cursor: pointer; margin: 6px; font-size: 18px; }
         .editBtn { background: orange; }
         .delBtn { background: #ff1744; color: white; }
         
-        /* INPUTS - Huge for easy typing */
         .inputBox { 
             background: #1c1c2e; 
-            border-radius: 40px; 
-            padding: 25px; 
-            margin: 15px 0; 
-            border: 2px solid #444; 
+            border-radius: 35px; 
+            padding: 20px; 
+            margin: 12px 0; 
+            border: 1.5px solid #444; 
             color: white; 
             width: 85%; 
-            font-size: 28px; /* Scaled */
+            font-size: 24px; 
         }
         
-        /* ACTION BUTTONS */
         .btn { 
             background: #00e5ff; 
             color: black; 
             border: none; 
-            padding: 24px 50px; /* Scaled */
-            border-radius: 60px; 
-            font-size: 32px; /* Scaled */
+            padding: 21px 42px; 
+            border-radius: 45px; 
+            font-size: 27px; 
             font-weight: 700;
             cursor: pointer; 
-            margin-top: 20px;
-            width: 90%;
-            max-width: 400px;
+            margin-top: 15px;
+            width: 85%;
+            max-width: 350px;
         }
         
-        .section { display: none; text-align: center; margin-top: 40px; padding: 25px; }
-        .section h2 { font-size: 45px; }
-        .section p { font-size: 28px; }
+        .section { display: none; text-align: center; margin-top: 30px; padding: 20px; }
+        .section h2 { font-size: 39px; }
+        .section p { font-size: 24px; }
     </style>
 </head>
 <body>
@@ -117,7 +104,7 @@
     <br><br>
     <button class="btn" id="copyBtn" style="display:none; background: #ff4081; color: white;">Copy Link</button>
     <br><br>
-    <button onclick="location.reload()" style="background:none; border:none; color:grey; font-size: 24px; cursor:pointer; margin-top:30px;">← Back</button>
+    <button onclick="location.reload()" style="background:none; border:none; color:grey; font-size: 21px; cursor:pointer; margin-top:25px;">← Back</button>
 </div>
 
 <script>
@@ -171,6 +158,28 @@ function addTab() {
     }
 }
 
+function editTab(index) {
+    tabs[index].title = prompt("New Title:", tabs[index].title) || tabs[index].title;
+    tabs[index].desc = prompt("New Description:", tabs[index].desc) || tabs[index].desc;
+    saveAndRender();
+}
+
+function deleteTab(index) {
+    if(confirm("Delete this tab?")) {
+        tabs.splice(index, 1);
+        saveAndRender();
+    }
+}
+
+function editHero() {
+    if(!isAdmin) return;
+    let newHero = prompt("Edit Header:", document.getElementById("heroText").innerText);
+    if(newHero) {
+        document.getElementById("heroText").innerText = newHero;
+        localStorage.setItem("heroText", newHero);
+    }
+}
+
 function saveAndRender() {
     localStorage.setItem('tabs', JSON.stringify(tabs));
     renderTabs();
@@ -196,6 +205,7 @@ function generate(){
     };
 }
 
+if(localStorage.getItem("heroText")) document.getElementById("heroText").innerText = localStorage.getItem("heroText");
 renderTabs();
 </script>
 </body>
