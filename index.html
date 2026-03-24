@@ -1,32 +1,96 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gen Z Crush</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { margin: 0; font-family: 'Poppins', sans-serif; background: #0f0f1a; color: white; padding-bottom: 50px; }
-        .top { position: fixed; right: 15px; top: 15px; z-index: 100; }
-        .adminBtn { background: rgba(255,255,255,0.1); border: 1px solid white; color: white; padding: 10px; border-radius: 50%; cursor: pointer; }
+        body { margin: 0; font-family: 'Poppins', sans-serif; background: #0f0f1a; color: white; padding-bottom: 80px; }
         
-        .hero { margin: 20px; padding: 50px 20px; border-radius: 30px; background: linear-gradient(135deg,#6a11cb,#2575fc); text-align: center; font-size: 36px; font-weight: 700; }
+        /* ADMIN BUTTON - Enlarged for Mobile */
+        .top { position: fixed; right: 20px; top: 20px; z-index: 100; }
+        .adminBtn { 
+            background: rgba(255,255,255,0.15); 
+            border: 2px solid white; 
+            color: white; 
+            padding: 18px; /* Increased */
+            border-radius: 50%; 
+            cursor: pointer; 
+            font-size: 24px; /* Increased */
+        }
+        
+        /* HERO - Scaled Text */
+        .hero { 
+            margin: 25px; 
+            padding: 70px 25px; 
+            border-radius: 40px; 
+            background: linear-gradient(135deg,#6a11cb,#2575fc); 
+            text-align: center; 
+            font-size: 56px; /* 32px * 1.75 */
+            font-weight: 700; 
+        }
         
         .container { display: flex; flex-direction: column; align-items: center; }
         
+        /* CARDS - Larger touch targets */
         .card { 
-            margin: 15px; padding: 25px; border-radius: 25px; width: 85%; max-width: 350px; 
-            text-align: center; transition: 0.3s; cursor: pointer; position: relative;
+            margin: 25px; 
+            padding: 40px; 
+            border-radius: 35px; 
+            width: 85%; 
+            max-width: 450px; 
+            text-align: center; 
+            transition: 0.3s; 
+            cursor: pointer; 
+            position: relative;
         }
-        .card:hover { transform: scale(1.05); }
+        .card h3 { font-size: 38px; margin-bottom: 15px; } /* Scaled */
+        .card p { font-size: 28px; opacity: 0.9; } /* Scaled */
         
-        .admin-controls { display: none; margin-top: 20px; text-align: center; }
-        .editBtn, .delBtn { padding: 5px 10px; border-radius: 5px; border: none; cursor: pointer; margin: 2px; font-size: 12px; }
+        /* ADMIN CONTROLS */
+        .admin-controls { display: none; margin-top: 30px; text-align: center; width: 100%; }
+        .editBtn, .delBtn { 
+            padding: 12px 20px; 
+            border-radius: 10px; 
+            border: none; 
+            cursor: pointer; 
+            margin: 8px; 
+            font-size: 20px; 
+        }
         .editBtn { background: orange; }
         .delBtn { background: #ff1744; color: white; }
         
-        .inputBox { background: #1c1c2e; border-radius: 25px; padding: 15px; margin: 10px; border: 1px solid #333; color: white; width: 80%; font-size: 16px; }
-        .btn { background: #00e5ff; color: black; border: none; padding: 14px 28px; border-radius: 30px; font-size: 18px; cursor: pointer; margin-top: 10px; }
+        /* INPUTS - Huge for easy typing */
+        .inputBox { 
+            background: #1c1c2e; 
+            border-radius: 40px; 
+            padding: 25px; 
+            margin: 15px 0; 
+            border: 2px solid #444; 
+            color: white; 
+            width: 85%; 
+            font-size: 28px; /* Scaled */
+        }
         
-        .section { display: none; text-align: center; margin-top: 30px; padding: 20px; }
+        /* ACTION BUTTONS */
+        .btn { 
+            background: #00e5ff; 
+            color: black; 
+            border: none; 
+            padding: 24px 50px; /* Scaled */
+            border-radius: 60px; 
+            font-size: 32px; /* Scaled */
+            font-weight: 700;
+            cursor: pointer; 
+            margin-top: 20px;
+            width: 90%;
+            max-width: 400px;
+        }
+        
+        .section { display: none; text-align: center; margin-top: 40px; padding: 25px; }
+        .section h2 { font-size: 45px; }
+        .section p { font-size: 28px; }
     </style>
 </head>
 <body>
@@ -38,9 +102,7 @@
 <div class="hero" id="heroText" onclick="editHero()">✨ Gen Z ✨</div>
 
 <div id="home" class="container">
-    <div id="cardContainer" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
-        </div>
-
+    <div id="cardContainer" style="width: 100%; display: flex; flex-direction: column; align-items: center;"></div>
     <div class="admin-controls" id="adminPanel">
         <button class="btn" style="background: #00e676;" onclick="addTab()">+ Add New Tab</button>
     </div>
@@ -55,7 +117,7 @@
     <br><br>
     <button class="btn" id="copyBtn" style="display:none; background: #ff4081; color: white;">Copy Link</button>
     <br><br>
-    <button onclick="location.reload()" style="background:none; border:none; color:grey; cursor:pointer;">← Back</button>
+    <button onclick="location.reload()" style="background:none; border:none; color:grey; font-size: 24px; cursor:pointer; margin-top:30px;">← Back</button>
 </div>
 
 <script>
@@ -70,15 +132,11 @@ function adminLogin(){
         isAdmin = true;
         document.getElementById("adminPanel").style.display = "block";
         renderTabs();
-        alert("Admin Mode Active");
     }
 }
 
 function getRandomColor() {
-    const colors = [
-        ['#ff9a9e', '#fecfef'], ['#a1c4fd', '#c2e9fb'], ['#84fab0', '#8fd3f4'],
-        ['#fccb90', '#d57eeb'], ['#667eea', '#764ba2'], ['#4facfe', '#00f2fe']
-    ];
+    const colors = [['#ff9a9e', '#fecfef'], ['#a1c4fd', '#c2e9fb'], ['#84fab0', '#8fd3f4'], ['#667eea', '#764ba2']];
     let pair = colors[Math.floor(Math.random() * colors.length)];
     return `linear-gradient(135deg, ${pair[0]}, ${pair[1]})`;
 }
@@ -113,28 +171,6 @@ function addTab() {
     }
 }
 
-function editTab(index) {
-    tabs[index].title = prompt("New Title:", tabs[index].title) || tabs[index].title;
-    tabs[index].desc = prompt("New Description:", tabs[index].desc) || tabs[index].desc;
-    saveAndRender();
-}
-
-function deleteTab(index) {
-    if(confirm("Delete this tab?")) {
-        tabs.splice(index, 1);
-        saveAndRender();
-    }
-}
-
-function editHero() {
-    if(!isAdmin) return;
-    let newHero = prompt("Edit Header:", document.getElementById("heroText").innerText);
-    if(newHero) {
-        document.getElementById("heroText").innerText = newHero;
-        localStorage.setItem("heroText", newHero);
-    }
-}
-
 function saveAndRender() {
     localStorage.setItem('tabs', JSON.stringify(tabs));
     renderTabs();
@@ -152,19 +188,15 @@ function generate(){
     let crush = document.getElementById("crush").value;
     if(!your || !crush) return alert("Fill both names!");
     
-    let link = window.location.href.replace('index.html', '') + "post.html?your="+encodeURIComponent(your)+"&crush="+encodeURIComponent(crush);
-    let copyBtn = document.getElementById("copyBtn");
-    copyBtn.style.display = "inline-block";
-    copyBtn.onclick = () => {
+    let link = window.location.origin + window.location.pathname.replace('index.html', '') + "post.html?your="+encodeURIComponent(your)+"&crush="+encodeURIComponent(crush);
+    document.getElementById("copyBtn").style.display = "inline-block";
+    document.getElementById("copyBtn").onclick = () => {
         navigator.clipboard.writeText(link);
         alert("Link Copied!");
     };
 }
 
-// Initial Load
-if(localStorage.getItem("heroText")) document.getElementById("heroText").innerText = localStorage.getItem("heroText");
 renderTabs();
-
 </script>
 </body>
 </html>
