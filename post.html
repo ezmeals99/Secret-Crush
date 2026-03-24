@@ -3,44 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Secret Message for You</title>
+    <title>A Secret Message for You ❤️</title>
     <style>
-        body {
-            background-color: #121212;
-            color: white;
-            font-family: 'Segoe UI', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            text-align: center;
-        }
-        .heart { font-size: 80px; color: #ff4757; margin-bottom: 20px; animation: beat 1s infinite; }
-        @keyframes beat {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-        h1 { font-size: 24px; padding: 0 20px; line-height: 1.6; }
+        body { background-color: #121212; color: white; font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; margin: 0; text-align: center; }
+        .heart { font-size: 80px; color: #ff4757; animation: beat 1s infinite; margin-bottom: 20px; }
+        @keyframes beat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        h1 { font-size: 26px; padding: 0 20px; }
         .highlight { color: #ff4757; font-weight: bold; }
+        .ad-bottom { position: fixed; bottom: 10px; width: 100%; }
     </style>
 </head>
 <body>
 
     <div>
         <div class="heart">❤️</div>
-        <h1 id="msg">Loading secret message...</h1>
+        <h1 id="msg">Decoding secret message...</h1>
+    </div>
+
+    <div class="ad-bottom">
+        <script async="async" data-cfasync="false" src="https://pl28973149.profitablecpmratenetwork.com/e45774a62c02b4a3476a77a874772c70/invoke.js"></script>
+        <div id="container-e45774a62c02b4a3476a77a874772c70"></div>
     </div>
 
     <script>
         const urlParams = new URLSearchParams(window.location.search);
-        const your = urlParams.get('your');
-        const crush = urlParams.get('crush');
+        const yName = urlParams.get('your');
+        const cName = urlParams.get('crush');
 
-        if(your && crush) {
+        if(yName && cName) {
             document.getElementById("msg").innerHTML = 
-                `<span class="highlight">${your}</span> has a secret crush on <br> <span class="highlight">${crush}</span>! ✨`;
+                `<span class="highlight">${yName}</span> has a secret crush on <br> <span class="highlight">${cName}</span>! ✨`;
         } else {
             document.getElementById("msg").innerText = "No secret message found! 💔";
         }
