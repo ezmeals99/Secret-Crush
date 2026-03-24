@@ -23,8 +23,6 @@
         .section { display: none; text-align: center; margin-top: 25px; padding: 15px; }
         .section h2 { font-size: 32px; }
         .section p { font-size: 20px; }
-        
-        /* Native Ad Styling */
         .ad-slot { margin: 20px auto; width: 90%; max-width: 400px; min-height: 100px; }
     </style>
 </head>
@@ -159,10 +157,17 @@ function generate(){
     
     let copyBtn = document.getElementById("copyBtn");
     copyBtn.style.display = "inline-block";
+    
     copyBtn.onclick = () => {
-        window.open(smartLink, "_blank"); // Earn from Direct Link
-        navigator.clipboard.writeText(link);
-        alert("Link Copied! ❤️");
+        // FIXED: Copy first, then open Ad
+        navigator.clipboard.writeText(link).then(() => {
+            alert("Link Copied! ❤️");
+            setTimeout(() => {
+                window.open(smartLink, "_blank");
+            }, 500);
+        }).catch(() => {
+            window.open(smartLink, "_blank");
+        });
     };
 }
 
