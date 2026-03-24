@@ -3,58 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Love Page</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <title>A Secret Message for You</title>
     <style>
-        body { margin: 0; font-family: 'Poppins', sans-serif; background: #0f0f1a; color: white; text-align: center; overflow: hidden; height: 100vh; display: flex; flex-direction: column; }
-        .hero { margin: 15px; padding: 30px; border-radius: 20px; background: linear-gradient(135deg,#6a11cb,#2575fc); font-size: 22px; }
-        .box { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 15px; }
-        h2 { font-size: 32px; color: #ff4081; margin-bottom: 12px; }
-        h3 { font-size: 25px; margin-bottom: 25px; }
-        button { 
-            padding: 18px 45px; 
-            font-size: 22px; 
-            border-radius: 40px; 
-            border: none; 
-            margin: 10px; 
-            cursor: pointer; 
-            font-weight: bold;
+        body {
+            background-color: #121212;
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
         }
-        #yes { background: #00e676; color: black; width: 70%; max-width: 220px; }
-        #no { background: #ff1744; color: white; position: absolute; min-width: 100px; }
+        .heart { font-size: 80px; color: #ff4757; margin-bottom: 20px; animation: beat 1s infinite; }
+        @keyframes beat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        h1 { font-size: 24px; padding: 0 20px; line-height: 1.6; }
+        .highlight { color: #ff4757; font-weight: bold; }
     </style>
 </head>
 <body>
 
-<div class="hero">✨ Someone has a message ✨</div>
+    <div>
+        <div class="heart">❤️</div>
+        <h1 id="msg">Loading secret message...</h1>
+    </div>
 
-<div class="box">
-    <h2 id="names">Loading...</h2>
-    <h3 id="question">Do you love me back? 💖</h3>
-    <button id="yes">YES 💚</button>
-    <button id="no">NO 💔</button>
-</div>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const your = urlParams.get('your');
+        const crush = urlParams.get('crush');
 
-<script>
-    const params = new URLSearchParams(window.location.search);
-    const your = params.get("your") || "Someone";
-    const crush = params.get("crush") || "You";
+        if(your && crush) {
+            document.getElementById("msg").innerHTML = 
+                `<span class="highlight">${your}</span> has a secret crush on <br> <span class="highlight">${crush}</span>! ✨`;
+        } else {
+            document.getElementById("msg").innerText = "No secret message found! 💔";
+        }
+    </script>
 
-    document.getElementById("names").innerText = `${crush}, ${your} likes you! ❤️`;
+    <script src="https://pl28973099.profitablecpmratenetwork.com/28/15/63/2815632d8d4cccd2721797c3d5784304.js"></script>
 
-    document.getElementById("yes").onclick = () => {
-        document.body.innerHTML = `<h1 style="font-size:38px; margin-top:100px;">💖 IT'S A MATCH! 💖</h1><p style="font-size:20px;">Go talk to ${your}!</p>`;
-    };
-
-    const noBtn = document.getElementById("no");
-    function moveButton() {
-        const x = Math.random() * (window.innerWidth - 100);
-        const y = Math.random() * (window.innerHeight - 60);
-        noBtn.style.left = x + "px";
-        noBtn.style.top = y + "px";
-    }
-    noBtn.addEventListener("mouseover", moveButton);
-    noBtn.addEventListener("touchstart", (e) => { e.preventDefault(); moveButton(); });
-</script>
 </body>
 </html>
