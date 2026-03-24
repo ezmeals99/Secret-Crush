@@ -1,14 +1,88 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Crush UI</title>
+<title>Gen Z Crush</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
 
 <style>
+
 body {
     margin: 0;
-    font-family: Arial;
-    background: linear-gradient(to right,#6a11cb,#2575fc);
+    font-family: 'Poppins', sans-serif;
+    background: #0f0f1a;
     color: white;
+}
+
+/* HERO */
+.hero {
+    margin: 20px;
+    padding: 40px;
+    border-radius: 30px;
+    background: linear-gradient(135deg,#6a11cb,#2575fc);
+    text-align: center;
+    font-size: 40px;
+    font-weight: 600;
+}
+
+/* CARDS */
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.card {
+    background: #1c1c2e;
+    margin: 15px;
+    padding: 20px;
+    border-radius: 20px;
+    width: 250px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.editBtn {
+    display: none;
+    background: orange;
+    border: none;
+    margin-top: 10px;
+}
+
+/* INPUT BOX */
+.inputBox {
+    background: #1c1c2e;
+    border-radius: 20px;
+    padding: 15px;
+    margin: 10px;
+    border: none;
+    color: white;
+}
+
+/* BUTTON */
+.btn {
+    background: #00e5ff;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn:active {
+    transform: scale(0.9);
+}
+
+/* HIDE SECTIONS */
+.section {
+    display: none;
+    text-align: center;
+    margin-top: 30px;
 }
 
 .top {
@@ -17,130 +91,98 @@ body {
     top: 20px;
 }
 
-.tabs {
-    display: flex;
-    justify-content: center;
-    background: rgba(0,0,0,0.3);
-}
-
-.tab {
-    padding: 15px 25px;
-    cursor: pointer;
-}
-
-.active {
-    background: black;
-}
-
-.section {
-    display: none;
-    text-align: center;
-    margin-top: 100px;
-}
-
-input {
-    padding: 10px;
-    margin: 10px;
-}
-
-button {
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-}
-
-.editBtn {
-    display: none;
-    background: orange;
-    margin-left: 10px;
-}
 </style>
 </head>
 
 <body>
 
 <div class="top">
-<button onclick="login()">Admin</button>
+<button class="btn" onclick="adminLogin()">Admin</button>
 </div>
 
-<!-- Tabs -->
-<div class="tabs">
-<div class="tab active" onclick="openTab('home')">Home</div>
-<div class="tab" onclick="openTab('create')">Create</div>
-<div class="tab" onclick="openTab('preview')">Preview</div>
+<!-- HERO -->
+<div class="hero" id="heroText">✨ Gen Z ✨</div>
+
+<!-- HOME CARDS -->
+<div id="home" class="container">
+
+<div class="card" onclick="openCategory('secret')">
+<h3 id="card1">Secret Crush 💖</h3>
+<p id="card1desc">Send a hidden love message</p>
+<button class="editBtn" onclick="edit('card1')">Edit</button>
+<button class="editBtn" onclick="edit('card1desc')">Edit Desc</button>
 </div>
 
-<!-- HOME -->
-<div id="home" class="section" style="display:block;">
-<h1 id="homeText">Welcome 💖</h1>
-<button class="editBtn" onclick="edit('homeText')">Edit</button>
 </div>
 
-<!-- CREATE -->
+<!-- CATEGORY PAGE -->
+<div id="secret" class="section">
+<h2 id="secretTitle">Secret Crush 💖</h2>
+<p id="secretDesc">Create your hidden love link</p>
+
+<button class="editBtn" onclick="edit('secretTitle')">Edit</button>
+<button class="editBtn" onclick="edit('secretDesc')">Edit</button>
+
+<br><br>
+<button class="btn" onclick="openCreate()">Create New</button>
+</div>
+
+<!-- CREATE PAGE -->
 <div id="create" class="section">
-<h2 id="createText">Create your link</h2>
-<button class="editBtn" onclick="edit('createText')">Edit</button>
 
-<br>
-<input id="your" placeholder="Your Name"><br>
-<input id="crush" placeholder="Crush Name"><br>
+<input class="inputBox" id="your" placeholder="Your Name"><br>
+<input class="inputBox" id="crush" placeholder="Crush Name"><br>
 
-<button onclick="generate()">Generate</button>
+<button class="btn" onclick="generate()">Generate</button>
 
-<p id="linkBox"></p>
-</div>
+<br><br>
+<button class="btn" id="copyBtn" style="display:none;">Copy Link</button>
 
-<!-- PREVIEW -->
-<div id="preview" class="section">
-<h2 id="previewText">Preview</h2>
-<button class="editBtn" onclick="edit('previewText')">Edit</button>
-
-<p id="previewBox"></p>
 </div>
 
 <script>
 
 let isAdmin = false;
-
-// TAB SWITCH
-function openTab(id){
-    document.querySelectorAll(".section").forEach(s=>s.style.display="none");
-    document.getElementById(id).style.display="block";
-
-    document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
-    event.target.classList.add("active");
-}
+let generatedLink = "";
 
 // ADMIN LOGIN
-function login(){
-    let pass = prompt("Enter password:");
+function adminLogin(){
+    let pass = prompt("Password:");
     if(pass === "1234"){
         isAdmin = true;
         document.querySelectorAll(".editBtn").forEach(b=>b.style.display="inline");
-        alert("Admin mode ON");
-    } else {
-        alert("Wrong password");
+        alert("Admin Mode ON");
     }
 }
 
-// EDIT TEXT
+// EDIT FUNCTION
 function edit(id){
     let el = document.getElementById(id);
-    let newText = prompt("Edit text:", el.innerText);
+    let newText = prompt("Edit:", el.innerText);
     if(newText){
         el.innerText = newText;
         localStorage.setItem(id, newText);
     }
 }
 
-// LOAD SAVED TEXT
+// LOAD TEXT
 function load(){
-    ["homeText","createText","previewText"].forEach(id=>{
+    let ids = ["heroText","card1","card1desc","secretTitle","secretDesc"];
+    ids.forEach(id=>{
         let saved = localStorage.getItem(id);
-        if(saved){
-            document.getElementById(id).innerText = saved;
-        }
+        if(saved) document.getElementById(id).innerText = saved;
     });
+}
+
+// NAVIGATION
+function openCategory(id){
+    document.getElementById("home").style.display="none";
+    document.getElementById(id).style.display="block";
+}
+
+function openCreate(){
+    document.getElementById("secret").style.display="none";
+    document.getElementById("create").style.display="block";
 }
 
 // GENERATE LINK
@@ -148,14 +190,16 @@ function generate(){
     let your = document.getElementById("your").value;
     let crush = document.getElementById("crush").value;
 
-    let link = window.location.origin + window.location.pathname +
+    generatedLink = window.location.origin + window.location.pathname +
     "post.html?your="+your+"&crush="+crush;
 
-    document.getElementById("linkBox").innerHTML =
-    `<a href="${link}" target="_blank">${link}</a>`;
+    document.getElementById("copyBtn").style.display="inline";
+}
 
-    document.getElementById("previewBox").innerText =
-    `${crush}, ${your} likes you ❤️`;
+// COPY BUTTON
+document.getElementById("copyBtn").onclick = function(){
+    navigator.clipboard.writeText(generatedLink);
+    alert("Link Copied!");
 }
 
 load();
