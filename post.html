@@ -7,21 +7,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body { margin: 0; font-family: 'Poppins', sans-serif; background: #0f0f1a; color: white; text-align: center; overflow: hidden; height: 100vh; display: flex; flex-direction: column; }
-        .hero { margin: 20px; padding: 40px; border-radius: 30px; background: linear-gradient(135deg,#6a11cb,#2575fc); font-size: 32px; }
+        .hero { margin: 20px; padding: 35px; border-radius: 25px; background: linear-gradient(135deg,#6a11cb,#2575fc); font-size: 27px; }
         .box { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }
-        h2 { font-size: 48px; color: #ff4081; margin-bottom: 20px; }
-        h3 { font-size: 36px; margin-bottom: 40px; }
+        h2 { font-size: 39px; color: #ff4081; margin-bottom: 15px; }
+        h3 { font-size: 30px; margin-bottom: 30px; }
         button { 
-            padding: 25px 60px; 
-            font-size: 32px; 
-            border-radius: 60px; 
+            padding: 21px 50px; 
+            font-size: 27px; 
+            border-radius: 45px; 
             border: none; 
-            margin: 15px; 
+            margin: 12px; 
             cursor: pointer; 
             font-weight: bold;
         }
-        #yes { background: #00e676; color: black; width: 80%; max-width: 300px; }
-        #no { background: #ff1744; color: white; position: absolute; min-width: 150px; }
+        #yes { background: #00e676; color: black; width: 75%; max-width: 250px; }
+        #no { background: #ff1744; color: white; position: absolute; min-width: 120px; }
     </style>
 </head>
 <body>
@@ -43,13 +43,13 @@
     document.getElementById("names").innerText = `${crush}, ${your} likes you! ❤️`;
 
     document.getElementById("yes").onclick = () => {
-        document.body.innerHTML = `<h1 style="font-size:60px; margin-top:100px;">💖 IT'S A MATCH! 💖</h1><p style="font-size:30px;">Go talk to ${your}!</p>`;
+        document.body.innerHTML = `<h1 style="font-size:45px; margin-top:100px;">💖 IT'S A MATCH! 💖</h1><p style="font-size:24px;">Go talk to ${your}!</p>`;
     };
 
     const noBtn = document.getElementById("no");
     function moveButton() {
-        const x = Math.random() * (window.innerWidth - 150);
-        const y = Math.random() * (window.innerHeight - 100);
+        const x = Math.random() * (window.innerWidth - 120);
+        const y = Math.random() * (window.innerHeight - 80);
         noBtn.style.left = x + "px";
         noBtn.style.top = y + "px";
     }
