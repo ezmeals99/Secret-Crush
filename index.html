@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Crush Generator</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    background: linear-gradient(to bottom, #00c6ff, #0072ff);
+    color: white;
+    text-align: center;
+}
+
+.top-bar {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    background: #ff4081;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.container {
+    margin-top: 150px;
+}
+
+input {
+    padding: 10px;
+    width: 250px;
+    margin: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-bar">
+    <button onclick="adminLogin()">Admin</button>
+</div>
+
+<div class="container">
+    <h1 id="mainText">Create Your Crush Link 💖</h1>
+
+    <input id="yourName" placeholder="Your Name"><br>
+    <input id="crushName" placeholder="Crush Name"><br>
+
+    <button onclick="generate()">Generate</button>
+
+    <p id="linkBox"></p>
+</div>
+
+<script>
+
+// Admin editable text
+let siteText = {
+    main: "Create Your Crush Link 💖",
+    question: "Do you love me back? 😍"
+};
+
+function adminLogin() {
+    let pass = prompt("Enter admin password:");
+    if(pass === "1234"){
+        let newText = prompt("Change main text:", siteText.main);
+        if(newText) {
+            siteText.main = newText;
+            document.getElementById("mainText").innerText = newText;
+        }
+    } else {
+        alert("Wrong password!");
+    }
+}
+
+function generate() {
+    let your = document.getElementById("yourName").value;
+    let crush = document.getElementById("crushName").value;
+
+    let link = `post.html?your=${your}&crush=${crush}`;
+
+    document.getElementById("linkBox").innerHTML =
+        "Share this link:<br><a href='"+link+"'>"+link+"</a>";
+}
+
+</script>
+
+</body>
+</html>
