@@ -1,106 +1,51 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Love Page</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-
-<style>
-
-body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    background: #0f0f1a;
-    color: white;
-    text-align: center;
-    overflow: hidden;
-}
-
-.box {
-    margin-top: 120px;
-    padding: 20px;
-}
-
-h2 {
-    font-size: 26px;
-}
-
-h3 {
-    font-size: 22px;
-}
-
-/* BUTTONS */
-button {
-    padding: 14px 28px;
-    font-size: 18px;
-    border-radius: 30px;
-    border: none;
-    margin: 10px;
-    cursor: pointer;
-}
-
-#yes {
-    background: #00e676;
-    color: black;
-}
-
-#no {
-    background: #ff1744;
-    position: absolute;
-}
-
-/* HERO STYLE */
-.hero {
-    margin: 20px;
-    padding: 30px;
-    border-radius: 25px;
-    background: linear-gradient(135deg,#6a11cb,#2575fc);
-}
-
-</style>
+    <title>Love Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { margin: 0; font-family: 'Poppins', sans-serif; background: #0f0f1a; color: white; text-align: center; overflow: hidden; height: 100vh; }
+        .hero { margin: 20px; padding: 30px; border-radius: 25px; background: linear-gradient(135deg,#6a11cb,#2575fc); }
+        .box { margin-top: 50px; padding: 20px; }
+        h2 { font-size: 28px; color: #ff4081; }
+        button { padding: 15px 30px; font-size: 18px; border-radius: 50px; border: none; margin: 10px; cursor: pointer; transition: 0.2s; }
+        #yes { background: #00e676; color: black; font-weight: bold; }
+        #no { background: #ff1744; color: white; position: absolute; }
+    </style>
 </head>
-
 <body>
 
-<div class="hero">
-✨ Someone has a message for you ✨
-</div>
+<div class="hero">✨ A Secret Message ✨</div>
 
 <div class="box">
-<h2 id="names"></h2>
-<h3 id="question">Do you love me back? 💖</h3>
-
-<button id="yes">YES 💚</button>
-<button id="no">NO 💔</button>
+    <h2 id="names">Loading...</h2>
+    <h3 id="question">Do you love me back? 💖</h3>
+    <button id="yes">YES 💚</button>
+    <button id="no">NO 💔</button>
 </div>
 
 <script>
+    const params = new URLSearchParams(window.location.search);
+    const your = params.get("your") || "Someone";
+    const crush = params.get("crush") || "You";
 
-let params = new URLSearchParams(window.location.search);
+    document.getElementById("names").innerText = `${crush}, ${your} has a crush on you!`;
 
-let your = params.get("your");
-let crush = params.get("crush");
+    document.getElementById("yes").onclick = () => {
+        alert("Yay! ❤️ Go tell " + your + " the good news!");
+        document.body.innerHTML = `<h1>💖 It's a Match! 💖</h1><p>${your} is going to be so happy!</p>`;
+    };
 
-document.getElementById("names").innerText =
-`${crush}, ${your} likes you ❤️`;
+    const noBtn = document.getElementById("no");
+    noBtn.addEventListener("mouseover", moveButton);
+    noBtn.addEventListener("touchstart", moveButton);
 
-// YES
-document.getElementById("yes").onclick = () => {
-    alert("❤️ Accepted!");
-}
-
-// NO ESCAPE 😈
-let no = document.getElementById("no");
-
-no.addEventListener("mouseover", () => {
-    let x = Math.random() * window.innerWidth;
-    let y = Math.random() * window.innerHeight;
-
-    no.style.left = x + "px";
-    no.style.top = y + "px";
-});
-
+    function moveButton() {
+        const x = Math.random() * (window.innerWidth - 100);
+        const y = Math.random() * (window.innerHeight - 50);
+        noBtn.style.left = x + "px";
+        noBtn.style.top = y + "px";
+    }
 </script>
-
 </body>
 </html>
