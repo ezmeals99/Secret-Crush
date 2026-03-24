@@ -3,86 +3,174 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gen Z - Secret Crush ✨</title>
+    <title>Gen Z Crush</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #121212; color: #e0e0e0; font-family: 'Segoe UI', sans-serif; text-align: center; margin: 0; padding: 20px; }
-        .card { background-color: #1e1e1e; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); width: 90%; max-width: 400px; margin: auto; border: 1px solid #333; }
-        h1 { color: #ff4757; margin-bottom: 20px; }
-        input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 10px; border: 1px solid #444; background: #252525; color: white; box-sizing: border-box; }
-        .btn { background: #ff4757; color: white; padding: 12px 25px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 10px; transition: 0.3s; }
-        .btn:hover { background: #ff6b81; }
-        #copyBtn { background: #2ed573; display: none; margin-top: 15px; }
+        body { margin: 0; font-family: 'Poppins', sans-serif; background: #0f0f1a; color: white; padding-bottom: 50px; }
+        .top { position: fixed; right: 15px; top: 15px; z-index: 100; }
+        .adminBtn { background: rgba(255,255,255,0.1); border: 1.25px solid white; color: white; padding: 12px; border-radius: 50%; cursor: pointer; font-size: 18px; }
+        .hero { margin: 15px; padding: 50px 15px; border-radius: 30px; background: linear-gradient(135deg,#6a11cb,#2575fc); text-align: center; font-size: 40px; font-weight: 700; cursor: pointer; }
+        .container { display: flex; flex-direction: column; align-items: center; }
+        .card { margin: 15px; padding: 30px; border-radius: 25px; width: 85%; max-width: 380px; text-align: center; transition: 0.3s; cursor: pointer; position: relative; }
+        .card h3 { font-size: 28px; margin-bottom: 10px; }
+        .card p { font-size: 20px; opacity: 0.9; }
+        .admin-controls { display: none; margin-top: 20px; text-align: center; width: 100%; }
+        .editBtn, .delBtn { padding: 8px 15px; border-radius: 8px; border: none; cursor: pointer; margin: 5px; font-size: 16px; color: white; }
+        .editBtn { background: orange; }
+        .delBtn { background: #ff1744; }
+        .inputBox { background: #1c1c2e; border-radius: 30px; padding: 18px; margin: 10px 0; border: 1.25px solid #444; color: white; width: 85%; font-size: 20px; }
+        .btn { background: #00e5ff; color: black; border: none; padding: 18px 35px; border-radius: 40px; font-size: 22px; font-weight: 700; cursor: pointer; margin-top: 12px; width: 80%; max-width: 320px; }
+        .section { display: none; text-align: center; margin-top: 25px; padding: 15px; }
+        .section h2 { font-size: 32px; }
+        .section p { font-size: 20px; }
         
-        /* Admin View Section */
-        .admin-view { margin-top: 40px; padding: 20px; background: #1a1a1a; border-radius: 15px; border: 1px dashed #444; }
-        .log-entry { background: #252525; padding: 10px; margin: 5px 0; border-radius: 8px; font-size: 14px; border-left: 4px solid #ff4757; text-align: left; }
-        
-        /* Native Ad Container */
-        .native-ad-box { margin-top: 30px; min-height: 100px; }
+        /* Native Ad Styling */
+        .ad-slot { margin: 20px auto; width: 90%; max-width: 400px; min-height: 100px; }
     </style>
 </head>
 <body>
 
-    <div class="card">
-        <h1>✨ Secret Crush ✨</h1>
-        <p>Reveal who has a crush on who!</p>
-        <input type="text" id="your" placeholder="Your Name">
-        <input type="text" id="crush" placeholder="Crush Name">
-        <button class="btn" onclick="generate()">Generate Secret Link</button>
-        <button id="copyBtn" class="btn">Copy Link ❤️</button>
-    </div>
+<div class="top">
+    <button class="adminBtn" onclick="adminLogin()">⚙️</button>
+</div>
 
-    <div class="admin-view">
-        <h3>Admin Dashboard (Live Activity)</h3>
-        <div id="adminLogs">No activity yet...</div>
-    </div>
+<div class="hero" id="heroText" onclick="editHero()">✨ Gen Z ✨</div>
 
-    <div class="native-ad-box">
-        <p style="font-size: 10px; color: #555; margin-bottom: 5px;">SPONSORED CONTENT</p>
+<div id="home" class="container">
+    <div id="cardContainer" style="width: 100%; display: flex; flex-direction: column; align-items: center;"></div>
+    
+    <div class="ad-slot">
         <script async="async" data-cfasync="false" src="https://pl28973149.profitablecpmratenetwork.com/e45774a62c02b4a3476a77a874772c70/invoke.js"></script>
         <div id="container-e45774a62c02b4a3476a77a874772c70"></div>
     </div>
 
-    <script>
-        // Adsterra Smartlink (Direct Link)
-        const smartLink = "https://www.profitablecpmratenetwork.com/pwbr9zkpk?key=186ff1d78e45ac5add5721c787843da1";
+    <div class="admin-controls" id="adminPanel">
+        <button class="btn" style="background: #00e676;" onclick="addTab()">+ Add New Tab</button>
+    </div>
+</div>
 
-        function generate() {
-            let yourName = document.getElementById("your").value;
-            let crushName = document.getElementById("crush").value;
-            
-            if(!yourName || !crushName) return alert("Please enter both names!");
+<div id="createSection" class="section">
+    <h2 id="viewTitle">Secret Crush</h2>
+    <p id="viewDesc">Enter details</p>
+    <input class="inputBox" id="your" placeholder="Your Name"><br>
+    <input class="inputBox" id="crush" placeholder="Crush Name"><br>
+    <button class="btn" onclick="generate()">Generate Link</button>
+    <br><br>
+    <button class="btn" id="copyBtn" style="display:none; background: #ff4081; color: white;">Copy Link</button>
+    <br><br>
+    <button onclick="location.reload()" style="background:none; border:none; color:grey; font-size: 18px; cursor:pointer; margin-top:20px;">← Back</button>
+</div>
 
-            // Secret link එක සාදන හැටි
-            let generatedLink = window.location.origin + window.location.pathname.replace('index.html', '') + 
-                               "post.html?your="+encodeURIComponent(yourName)+"&crush="+encodeURIComponent(crushName);
-            
-            // Button එක පෙන්වීම
-            let copyBtn = document.getElementById("copyBtn");
-            copyBtn.style.display = "block";
-            
-            copyBtn.onclick = () => {
-                // 1. Direct Link එක අලුත් Tab එකක Open කරනවා (Earnings)
-                window.open(smartLink, "_blank");
-                
-                // 2. Link එක Copy කරනවා
-                navigator.clipboard.writeText(generatedLink);
-                alert("Link Copied! Share it with friends. ❤️");
-            };
+<script>
+let isAdmin = false;
+const smartLink = "https://www.profitablecpmratenetwork.com/pwbr9zkpk?key=186ff1d78e45ac5add5721c787843da1";
 
-            // Admin Log එකට ඇතුළත් කිරීම (මතක ඇතුව Firebase කෝඩ් එක මෙතනට දාන්න)
-            updateAdminLogs(yourName, crushName);
-        }
+let tabs = JSON.parse(localStorage.getItem('tabs')) || [
+    { id: 1, title: "Secret Crush 💖", desc: "Send a hidden love message", color: "linear-gradient(135deg,#1c1c2e,#2d2d44)" }
+];
 
-        function updateAdminLogs(y, c) {
-            let logArea = document.getElementById("adminLogs");
-            if(logArea.innerText === "No activity yet...") logArea.innerHTML = "";
-            let entry = `<div class="log-entry">🔥 <b>${y}</b> created a link for <b>${c}</b></div>`;
-            logArea.innerHTML = entry + logArea.innerHTML;
-        }
-    </script>
+function adminLogin(){
+    let pass = prompt("Enter Admin Password:");
+    if(pass === "5522"){
+        isAdmin = true;
+        document.getElementById("adminPanel").style.display = "block";
+        renderTabs();
+    }
+}
 
-    <script src="https://pl28973099.profitablecpmratenetwork.com/28/15/63/2815632d8d4cccd2721797c3d5784304.js"></script>
+function getRandomColor() {
+    const colors = [['#ff9a9e', '#fecfef'], ['#a1c4fd', '#c2e9fb'], ['#84fab0', '#8fd3f4'], ['#667eea', '#764ba2']];
+    let pair = colors[Math.floor(Math.random() * colors.length)];
+    return `linear-gradient(135deg, ${pair[0]}, ${pair[1]})`;
+}
+
+function renderTabs() {
+    const container = document.getElementById("cardContainer");
+    container.innerHTML = "";
+    tabs.forEach((tab, index) => {
+        const div = document.createElement("div");
+        div.className = "card";
+        div.style.background = tab.color || "#1c1c2e";
+        div.innerHTML = `
+            <div onclick="openTab(${index})">
+                <h3>${tab.title}</h3>
+                <p>${tab.desc}</p>
+            </div>
+            ${isAdmin ? `
+                <div style="margin-top:10px;">
+                    <button class="editBtn" onclick="event.stopPropagation(); editTab(${index})">Edit</button>
+                    <button class="delBtn" onclick="event.stopPropagation(); deleteTab(${index})">Delete</button>
+                </div>
+            ` : ''}
+        `;
+        container.appendChild(div);
+    });
+}
+
+function addTab() {
+    const title = prompt("Tab Title:");
+    const desc = prompt("Tab Description:");
+    if(title) {
+        tabs.push({ id: Date.now(), title, desc, color: getRandomColor() });
+        saveAndRender();
+    }
+}
+
+function editTab(index) {
+    tabs[index].title = prompt("New Title:", tabs[index].title) || tabs[index].title;
+    tabs[index].desc = prompt("New Description:", tabs[index].desc) || tabs[index].desc;
+    saveAndRender();
+}
+
+function deleteTab(index) {
+    if(confirm("Delete this tab?")) {
+        tabs.splice(index, 1);
+        saveAndRender();
+    }
+}
+
+function editHero() {
+    if(!isAdmin) return;
+    let newHero = prompt("Edit Header:", document.getElementById("heroText").innerText);
+    if(newHero) {
+        document.getElementById("heroText").innerText = newHero;
+        localStorage.setItem("heroText", newHero);
+    }
+}
+
+function saveAndRender() {
+    localStorage.setItem('tabs', JSON.stringify(tabs));
+    renderTabs();
+}
+
+function openTab(index) {
+    document.getElementById("home").style.display = "none";
+    document.getElementById("createSection").style.display = "block";
+    document.getElementById("viewTitle").innerText = tabs[index].title;
+    document.getElementById("viewDesc").innerText = tabs[index].desc;
+}
+
+function generate(){
+    let your = document.getElementById("your").value;
+    let crush = document.getElementById("crush").value;
+    if(!your || !crush) return alert("Fill both names!");
+    
+    let link = window.location.origin + window.location.pathname.replace('index.html', '') + "post.html?your="+encodeURIComponent(your)+"&crush="+encodeURIComponent(crush);
+    
+    let copyBtn = document.getElementById("copyBtn");
+    copyBtn.style.display = "inline-block";
+    copyBtn.onclick = () => {
+        window.open(smartLink, "_blank"); // Earn from Direct Link
+        navigator.clipboard.writeText(link);
+        alert("Link Copied! ❤️");
+    };
+}
+
+if(localStorage.getItem("heroText")) document.getElementById("heroText").innerText = localStorage.getItem("heroText");
+renderTabs();
+</script>
+
+<script src="https://pl28973099.profitablecpmratenetwork.com/28/15/63/2815632d8d4cccd2721797c3d5784304.js"></script>
 
 </body>
 </html>
