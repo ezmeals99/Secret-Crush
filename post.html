@@ -1,75 +1,103 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
 <title>Love Page</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+
 <style>
+
 body {
-    text-align: center;
-    font-family: Arial;
-    background: #222;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #0f0f1a;
     color: white;
+    text-align: center;
     overflow: hidden;
 }
 
 .box {
-    margin-top: 150px;
+    margin-top: 120px;
+    padding: 20px;
 }
 
+h2 {
+    font-size: 26px;
+}
+
+h3 {
+    font-size: 22px;
+}
+
+/* BUTTONS */
 button {
-    padding: 10px 20px;
-    margin: 10px;
+    padding: 14px 28px;
+    font-size: 18px;
+    border-radius: 30px;
     border: none;
-    border-radius: 5px;
+    margin: 10px;
     cursor: pointer;
 }
 
 #yes {
-    background: green;
+    background: #00e676;
+    color: black;
 }
 
 #no {
-    background: red;
+    background: #ff1744;
     position: absolute;
 }
+
+/* HERO STYLE */
+.hero {
+    margin: 20px;
+    padding: 30px;
+    border-radius: 25px;
+    background: linear-gradient(135deg,#6a11cb,#2575fc);
+}
+
 </style>
 </head>
 
 <body>
 
-<div class="box">
-    <h2 id="names"></h2>
-    <h3 id="question">Do you love me back? 💖</h3>
+<div class="hero">
+✨ Someone has a message for you ✨
+</div>
 
-    <button id="yes">Yes</button>
-    <button id="no">No</button>
+<div class="box">
+<h2 id="names"></h2>
+<h3 id="question">Do you love me back? 💖</h3>
+
+<button id="yes">YES 💚</button>
+<button id="no">NO 💔</button>
 </div>
 
 <script>
 
-const params = new URLSearchParams(window.location.search);
+let params = new URLSearchParams(window.location.search);
 
 let your = params.get("your");
 let crush = params.get("crush");
 
 document.getElementById("names").innerText =
-    crush + ", " + your + " likes you ❤️";
+`${crush}, ${your} likes you ❤️`;
 
-// YES button
-document.getElementById("yes").onclick = function() {
-    alert("Aww ❤️ Success!");
+// YES
+document.getElementById("yes").onclick = () => {
+    alert("❤️ Accepted!");
 }
 
-// NO button escape 😈
-let noBtn = document.getElementById("no");
+// NO ESCAPE 😈
+let no = document.getElementById("no");
 
-noBtn.addEventListener("mouseover", () => {
+no.addEventListener("mouseover", () => {
     let x = Math.random() * window.innerWidth;
     let y = Math.random() * window.innerHeight;
 
-    noBtn.style.left = x + "px";
-    noBtn.style.top = y + "px";
+    no.style.left = x + "px";
+    no.style.top = y + "px";
 });
 
 </script>
