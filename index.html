@@ -1,232 +1,170 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Gen Z Crush</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-
-<style>
-
-body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    background: #0f0f1a;
-    color: white;
-}
-
-/* ADMIN BUTTON */
-.top {
-    position: fixed;
-    right: 15px;
-    top: 15px;
-}
-
-.adminBtn {
-    background: linear-gradient(135deg,#00e5ff,#00bcd4);
-    border: none;
-    padding: 12px 16px;
-    border-radius: 50px;
-    font-size: 18px;
-    cursor: pointer;
-}
-
-/* HERO */
-.hero {
-    margin: 20px;
-    padding: 50px 20px;
-    border-radius: 30px;
-    background: linear-gradient(135deg,#6a11cb,#2575fc);
-    text-align: center;
-    font-size: 36px;
-    font-weight: 700;
-}
-
-/* CARDS */
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.card {
-    background: #1c1c2e;
-    margin: 15px;
-    padding: 25px;
-    border-radius: 25px;
-    width: 85%;
-    max-width: 350px;
-    text-align: center;
-    transition: 0.3s;
-}
-
-.card:hover {
-    transform: scale(1.05);
-}
-
-.card h3 {
-    font-size: 22px;
-}
-
-.card p {
-    font-size: 16px;
-}
-
-.editBtn {
-    display: none;
-    background: orange;
-    margin-top: 10px;
-    padding: 6px 10px;
-}
-
-/* INPUT */
-.inputBox {
-    background: #1c1c2e;
-    border-radius: 25px;
-    padding: 15px;
-    margin: 10px;
-    border: none;
-    color: white;
-    width: 80%;
-    font-size: 16px;
-}
-
-/* BUTTON */
-.btn {
-    background: #00e5ff;
-    color: black;
-    border: none;
-    padding: 14px 28px;
-    border-radius: 30px;
-    font-size: 18px;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
-.btn:active {
-    transform: scale(0.9);
-}
-
-/* SECTIONS */
-.section {
-    display: none;
-    text-align: center;
-    margin-top: 30px;
-}
-
-</style>
+    <title>Gen Z Crush</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { margin: 0; font-family: 'Poppins', sans-serif; background: #0f0f1a; color: white; padding-bottom: 50px; }
+        .top { position: fixed; right: 15px; top: 15px; z-index: 100; }
+        .adminBtn { background: rgba(255,255,255,0.1); border: 1px solid white; color: white; padding: 10px; border-radius: 50%; cursor: pointer; }
+        
+        .hero { margin: 20px; padding: 50px 20px; border-radius: 30px; background: linear-gradient(135deg,#6a11cb,#2575fc); text-align: center; font-size: 36px; font-weight: 700; }
+        
+        .container { display: flex; flex-direction: column; align-items: center; }
+        
+        .card { 
+            margin: 15px; padding: 25px; border-radius: 25px; width: 85%; max-width: 350px; 
+            text-align: center; transition: 0.3s; cursor: pointer; position: relative;
+        }
+        .card:hover { transform: scale(1.05); }
+        
+        .admin-controls { display: none; margin-top: 20px; text-align: center; }
+        .editBtn, .delBtn { padding: 5px 10px; border-radius: 5px; border: none; cursor: pointer; margin: 2px; font-size: 12px; }
+        .editBtn { background: orange; }
+        .delBtn { background: #ff1744; color: white; }
+        
+        .inputBox { background: #1c1c2e; border-radius: 25px; padding: 15px; margin: 10px; border: 1px solid #333; color: white; width: 80%; font-size: 16px; }
+        .btn { background: #00e5ff; color: black; border: none; padding: 14px 28px; border-radius: 30px; font-size: 18px; cursor: pointer; margin-top: 10px; }
+        
+        .section { display: none; text-align: center; margin-top: 30px; padding: 20px; }
+    </style>
 </head>
-
 <body>
 
 <div class="top">
-<button class="adminBtn" onclick="adminLogin()">⚙️</button>
+    <button class="adminBtn" onclick="adminLogin()">⚙️</button>
 </div>
 
-<div class="hero" id="heroText">✨ Gen Z ✨</div>
+<div class="hero" id="heroText" onclick="editHero()">✨ Gen Z ✨</div>
 
-<!-- HOME -->
 <div id="home" class="container">
+    <div id="cardContainer" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+        </div>
 
-<div class="card" onclick="openCategory('secret')">
-<h3 id="card1">Secret Crush 💖</h3>
-<p id="card1desc">Send a hidden love message</p>
-
-<button class="editBtn" onclick="edit('card1')">Edit</button>
-<button class="editBtn" onclick="edit('card1desc')">Edit Desc</button>
+    <div class="admin-controls" id="adminPanel">
+        <button class="btn" style="background: #00e676;" onclick="addTab()">+ Add New Tab</button>
+    </div>
 </div>
 
-</div>
-
-<!-- CATEGORY -->
-<div id="secret" class="section">
-<h2 id="secretTitle">Secret Crush 💖</h2>
-<p id="secretDesc">Create your hidden love link</p>
-
-<button class="editBtn" onclick="edit('secretTitle')">Edit</button>
-<button class="editBtn" onclick="edit('secretDesc')">Edit</button>
-
-<br><br>
-<button class="btn" onclick="openCreate()">Create New</button>
-</div>
-
-<!-- CREATE -->
-<div id="create" class="section">
-
-<input class="inputBox" id="your" placeholder="Your Name"><br>
-<input class="inputBox" id="crush" placeholder="Crush Name"><br>
-
-<button class="btn" onclick="generate()">Generate</button>
-
-<br><br>
-<button class="btn" id="copyBtn" style="display:none;">Copy Link</button>
-
+<div id="createSection" class="section">
+    <h2 id="viewTitle">Secret Crush</h2>
+    <p id="viewDesc">Enter details</p>
+    <input class="inputBox" id="your" placeholder="Your Name"><br>
+    <input class="inputBox" id="crush" placeholder="Crush Name"><br>
+    <button class="btn" onclick="generate()">Generate Link</button>
+    <br><br>
+    <button class="btn" id="copyBtn" style="display:none; background: #ff4081; color: white;">Copy Link</button>
+    <br><br>
+    <button onclick="location.reload()" style="background:none; border:none; color:grey; cursor:pointer;">← Back</button>
 </div>
 
 <script>
-
 let isAdmin = false;
-let generatedLink = "";
+let tabs = JSON.parse(localStorage.getItem('tabs')) || [
+    { id: 1, title: "Secret Crush 💖", desc: "Send a hidden love message", color: "linear-gradient(135deg,#1c1c2e,#2d2d44)" }
+];
 
-// ADMIN
 function adminLogin(){
-    let pass = prompt("Password:");
-    if(pass === "1234"){
+    let pass = prompt("Enter Admin Password:");
+    if(pass === "5522"){
         isAdmin = true;
-        document.querySelectorAll(".editBtn").forEach(b=>b.style.display="inline");
-        alert("Admin Mode ON");
+        document.getElementById("adminPanel").style.display = "block";
+        renderTabs();
+        alert("Admin Mode Active");
     }
 }
 
-// EDIT
-function edit(id){
-    let el = document.getElementById(id);
-    let val = prompt("Edit:", el.innerText);
-    if(val){
-        el.innerText = val;
-        localStorage.setItem(id, val);
-    }
+function getRandomColor() {
+    const colors = [
+        ['#ff9a9e', '#fecfef'], ['#a1c4fd', '#c2e9fb'], ['#84fab0', '#8fd3f4'],
+        ['#fccb90', '#d57eeb'], ['#667eea', '#764ba2'], ['#4facfe', '#00f2fe']
+    ];
+    let pair = colors[Math.floor(Math.random() * colors.length)];
+    return `linear-gradient(135deg, ${pair[0]}, ${pair[1]})`;
 }
 
-// LOAD
-function load(){
-    let ids = ["heroText","card1","card1desc","secretTitle","secretDesc"];
-    ids.forEach(id=>{
-        let val = localStorage.getItem(id);
-        if(val) document.getElementById(id).innerText = val;
+function renderTabs() {
+    const container = document.getElementById("cardContainer");
+    container.innerHTML = "";
+    tabs.forEach((tab, index) => {
+        const div = document.createElement("div");
+        div.className = "card";
+        div.style.background = tab.color || "#1c1c2e";
+        div.innerHTML = `
+            <div onclick="openTab(${index})">
+                <h3>${tab.title}</h3>
+                <p>${tab.desc}</p>
+            </div>
+            ${isAdmin ? `
+                <button class="editBtn" onclick="editTab(${index})">Edit</button>
+                <button class="delBtn" onclick="deleteTab(${index})">Delete</button>
+            ` : ''}
+        `;
+        container.appendChild(div);
     });
 }
 
-// NAV
-function openCategory(id){
-    document.getElementById("home").style.display="none";
-    document.getElementById(id).style.display="block";
+function addTab() {
+    const title = prompt("Tab Title:");
+    const desc = prompt("Tab Description:");
+    if(title) {
+        tabs.push({ id: Date.now(), title, desc, color: getRandomColor() });
+        saveAndRender();
+    }
 }
 
-function openCreate(){
-    document.getElementById("secret").style.display="none";
-    document.getElementById("create").style.display="block";
+function editTab(index) {
+    tabs[index].title = prompt("New Title:", tabs[index].title) || tabs[index].title;
+    tabs[index].desc = prompt("New Description:", tabs[index].desc) || tabs[index].desc;
+    saveAndRender();
 }
 
-// GENERATE
+function deleteTab(index) {
+    if(confirm("Delete this tab?")) {
+        tabs.splice(index, 1);
+        saveAndRender();
+    }
+}
+
+function editHero() {
+    if(!isAdmin) return;
+    let newHero = prompt("Edit Header:", document.getElementById("heroText").innerText);
+    if(newHero) {
+        document.getElementById("heroText").innerText = newHero;
+        localStorage.setItem("heroText", newHero);
+    }
+}
+
+function saveAndRender() {
+    localStorage.setItem('tabs', JSON.stringify(tabs));
+    renderTabs();
+}
+
+function openTab(index) {
+    document.getElementById("home").style.display = "none";
+    document.getElementById("createSection").style.display = "block";
+    document.getElementById("viewTitle").innerText = tabs[index].title;
+    document.getElementById("viewDesc").innerText = tabs[index].desc;
+}
+
 function generate(){
     let your = document.getElementById("your").value;
     let crush = document.getElementById("crush").value;
-
-    generatedLink = window.location.origin + window.location.pathname +
-    "post.html?your="+your+"&crush="+crush;
-
-    document.getElementById("copyBtn").style.display="inline";
+    if(!your || !crush) return alert("Fill both names!");
+    
+    let link = window.location.href.replace('index.html', '') + "post.html?your="+encodeURIComponent(your)+"&crush="+encodeURIComponent(crush);
+    let copyBtn = document.getElementById("copyBtn");
+    copyBtn.style.display = "inline-block";
+    copyBtn.onclick = () => {
+        navigator.clipboard.writeText(link);
+        alert("Link Copied!");
+    };
 }
 
-// COPY
-document.getElementById("copyBtn").onclick = () => {
-    navigator.clipboard.writeText(generatedLink);
-    alert("Copied!");
-}
-
-load();
+// Initial Load
+if(localStorage.getItem("heroText")) document.getElementById("heroText").innerText = localStorage.getItem("heroText");
+renderTabs();
 
 </script>
-
 </body>
 </html>
