@@ -5,80 +5,80 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gen Z - Secret Crush ✨</title>
     <style>
-        body {
-            background-color: #121212;
-            color: #e0e0e0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden;
-        }
-        .container {
-            background-color: #1e1e1e;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            text-align: center;
-            width: 90%;
-            max-width: 400px;
-            border: 1px solid #333;
-        }
-        h1 { color: #ff4757; margin-bottom: 20px; font-size: 28px; }
-        input {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border-radius: 10px;
-            border: 1px solid #444;
-            background: #252525;
-            color: white;
-            box-sizing: border-box;
-        }
-        .btn {
-            background: #ff4757;
-            color: white;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: bold;
-            width: 100%;
-            margin-top: 10px;
-            transition: 0.3s;
-        }
+        body { background-color: #121212; color: #e0e0e0; font-family: 'Segoe UI', sans-serif; text-align: center; margin: 0; padding: 20px; }
+        .card { background-color: #1e1e1e; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); width: 90%; max-width: 400px; margin: auto; border: 1px solid #333; }
+        h1 { color: #ff4757; margin-bottom: 20px; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 10px; border: 1px solid #444; background: #252525; color: white; box-sizing: border-box; }
+        .btn { background: #ff4757; color: white; padding: 12px 25px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 10px; transition: 0.3s; }
         .btn:hover { background: #ff6b81; }
         #copyBtn { background: #2ed573; display: none; margin-top: 15px; }
+        
+        /* Admin View Section */
+        .admin-view { margin-top: 40px; padding: 20px; background: #1a1a1a; border-radius: 15px; border: 1px dashed #444; }
+        .log-entry { background: #252525; padding: 10px; margin: 5px 0; border-radius: 8px; font-size: 14px; border-left: 4px solid #ff4757; text-align: left; }
+        
+        /* Native Ad Container */
+        .native-ad-box { margin-top: 30px; min-height: 100px; }
     </style>
 </head>
 <body>
 
-    <div class="container">
+    <div class="card">
         <h1>✨ Secret Crush ✨</h1>
-        <p>Create a secret link to reveal a crush!</p>
+        <p>Reveal who has a crush on who!</p>
         <input type="text" id="your" placeholder="Your Name">
         <input type="text" id="crush" placeholder="Crush Name">
         <button class="btn" onclick="generate()">Generate Secret Link</button>
         <button id="copyBtn" class="btn">Copy Link ❤️</button>
     </div>
 
-    <script>
-        function generate() {
-            let your = document.getElementById("your").value;
-            let crush = document.getElementById("crush").value;
-            if(!your || !crush) return alert("Please fill both names!");
+    <div class="admin-view">
+        <h3>Admin Dashboard (Live Activity)</h3>
+        <div id="adminLogs">No activity yet...</div>
+    </div>
 
-            let link = window.location.origin + window.location.pathname.replace('index.html', '') + 
-                       "post.html?your="+encodeURIComponent(your)+"&crush="+encodeURIComponent(crush);
+    <div class="native-ad-box">
+        <p style="font-size: 10px; color: #555; margin-bottom: 5px;">SPONSORED CONTENT</p>
+        <script async="async" data-cfasync="false" src="https://pl28973149.profitablecpmratenetwork.com/e45774a62c02b4a3476a77a874772c70/invoke.js"></script>
+        <div id="container-e45774a62c02b4a3476a77a874772c70"></div>
+    </div>
+
+    <script>
+        // Adsterra Smartlink (Direct Link)
+        const smartLink = "https://www.profitablecpmratenetwork.com/pwbr9zkpk?key=186ff1d78e45ac5add5721c787843da1";
+
+        function generate() {
+            let yourName = document.getElementById("your").value;
+            let crushName = document.getElementById("crush").value;
             
+            if(!yourName || !crushName) return alert("Please enter both names!");
+
+            // Secret link එක සාදන හැටි
+            let generatedLink = window.location.origin + window.location.pathname.replace('index.html', '') + 
+                               "post.html?your="+encodeURIComponent(yourName)+"&crush="+encodeURIComponent(crushName);
+            
+            // Button එක පෙන්වීම
             let copyBtn = document.getElementById("copyBtn");
             copyBtn.style.display = "block";
+            
             copyBtn.onclick = () => {
-                navigator.clipboard.writeText(link);
-                alert("Link Copied! Share it with your friends. ❤️");
+                // 1. Direct Link එක අලුත් Tab එකක Open කරනවා (Earnings)
+                window.open(smartLink, "_blank");
+                
+                // 2. Link එක Copy කරනවා
+                navigator.clipboard.writeText(generatedLink);
+                alert("Link Copied! Share it with friends. ❤️");
             };
+
+            // Admin Log එකට ඇතුළත් කිරීම (මතක ඇතුව Firebase කෝඩ් එක මෙතනට දාන්න)
+            updateAdminLogs(yourName, crushName);
+        }
+
+        function updateAdminLogs(y, c) {
+            let logArea = document.getElementById("adminLogs");
+            if(logArea.innerText === "No activity yet...") logArea.innerHTML = "";
+            let entry = `<div class="log-entry">🔥 <b>${y}</b> created a link for <b>${c}</b></div>`;
+            logArea.innerHTML = entry + logArea.innerHTML;
         }
     </script>
 
