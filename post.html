@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Love Page</title>
+
+<style>
+body {
+    text-align: center;
+    font-family: Arial;
+    background: #222;
+    color: white;
+    overflow: hidden;
+}
+
+.box {
+    margin-top: 150px;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#yes {
+    background: green;
+}
+
+#no {
+    background: red;
+    position: absolute;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+    <h2 id="names"></h2>
+    <h3 id="question">Do you love me back? 💖</h3>
+
+    <button id="yes">Yes</button>
+    <button id="no">No</button>
+</div>
+
+<script>
+
+const params = new URLSearchParams(window.location.search);
+
+let your = params.get("your");
+let crush = params.get("crush");
+
+document.getElementById("names").innerText =
+    crush + ", " + your + " likes you ❤️";
+
+// YES button
+document.getElementById("yes").onclick = function() {
+    alert("Aww ❤️ Success!");
+}
+
+// NO button escape 😈
+let noBtn = document.getElementById("no");
+
+noBtn.addEventListener("mouseover", () => {
+    let x = Math.random() * window.innerWidth;
+    let y = Math.random() * window.innerHeight;
+
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+});
+
+</script>
+
+</body>
+</html>
